@@ -1,0 +1,37 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:58229",
+      "sslPort": 44323
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "DATABASE_URL": "postgres://hbqcvaqjzqjkff:b3c88f2a758a775ff7871928972c5e65235d7178a6da4604756176a2a10df12e@ec2-52-19-164-214.eu-west-1.compute.amazonaws.com:5432/d5l0o8lk13nv7d",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "CafeLab": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "DATABASE_URL": "postgres://hbqcvaqjzqjkff:b3c88f2a758a775ff7871928972c5e65235d7178a6da4604756176a2a10df12e@ec2-52-19-164-214.eu-west-1.compute.amazonaws.com:5432/d5l0o8lk13nv7d",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}
