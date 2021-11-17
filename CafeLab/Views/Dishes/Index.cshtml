@@ -1,65 +1,64 @@
 ﻿@model IEnumerable<CafeLab.Models.Dish>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Меню";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Меню</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Додати страву</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.PictureUrl)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Weight)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PictureUrl)
-            </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Category)
             </th>
-            <th></th>
+            <th class="text-center"></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
+        @foreach (var item in Model)
+        {
+        <tr class="align-middle">
+            <td class="text-center">
+                <img src="@Html.DisplayFor(modelItem => item.PictureUrl)" width="200px" height="200px"/>
+            </td>
+            <td class="text-center">
+                <span class="badge bg-primary">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </span>
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Weight)г.
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Price)₴
+            </td>
+            <td class="text-center">
+                <span class="badge bg-secondary">
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </span>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PictureUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Детальніше</a> |
+                <a type="button" class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

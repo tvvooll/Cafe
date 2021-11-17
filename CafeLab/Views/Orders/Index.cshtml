@@ -1,41 +1,60 @@
 ﻿@model IEnumerable<CafeLab.Models.Order>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Замовлення";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Замовлення</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Додати замовлення</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Dishes)
+            </th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.OrderedAt)
             </th>
-            <th></th>
+            <th class="text-center"></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
+                @foreach (var dish in item.Dishes)
+                {
+                    <span class="badge bg-primary">
+                        @dish.Dish.Name
+                    </span>
+                }
+            </td>
+
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td class="text-center">
                 @Html.DisplayFor(modelItem => item.OrderedAt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Детальніше</a> |
+                <a type="button" class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

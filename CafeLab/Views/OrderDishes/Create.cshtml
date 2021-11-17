@@ -1,12 +1,12 @@
-﻿@model CafeLab.Models.Category
+﻿@model CafeLab.Models.OrderDishes
 
 @{
-    ViewData["Title"] = "Додати нову категорію";
+    ViewData["Title"] = "Додати нову страву до замовлення";
 }
 
 <h1 class="text-center">Нова</h1>
 
-<h4 class="text-center">Категорія</h4>
+<h4 class="text-center">Страва в замовленні</h4>
 <hr />
 
 <style>
@@ -29,14 +29,12 @@
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="DishId" class="control-label"></label>
+        <select asp-for="DishId" class="form-control" asp-items="ViewBag.DishId"></select>
     </div>
     <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description" class="text-danger"></span>
+        <label asp-for="OrderId" class="control-label"></label>
+        <select asp-for="OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
     </div>
     <div class="form-group" style="margin: auto;">
         <input type="submit" value="Додати" style="margin: auto;" class="btn btn-info" />

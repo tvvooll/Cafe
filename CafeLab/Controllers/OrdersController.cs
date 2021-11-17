@@ -21,7 +21,7 @@ namespace CafeLab.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Orders.ToListAsync());
+            return View(await _context.Orders.Include(x => x.Dishes).ThenInclude(x => x.Dish).ToListAsync());
         }
 
         // GET: Orders/Details/5
@@ -32,7 +32,7 @@ namespace CafeLab.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            var order = await _context.Orders.Include(x => x.Dishes).ThenInclude(x => x.Dish)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
@@ -123,7 +123,7 @@ namespace CafeLab.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            var order = await _context.Orders.Include(x => x.Dishes).ThenInclude(x => x.Dish)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {

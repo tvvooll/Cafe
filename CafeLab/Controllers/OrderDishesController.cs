@@ -1,72 +1,55 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using CafeLab.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CafeLab.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CafeLab.Controllers
 {
-    public class DishesController : Controller
+    public class OrderDishesController : Controller
     {
         private readonly CafeDbContext _context;
 
-        public DishesController(CafeDbContext context)
+        public OrderDishesController(CafeDbContext context)
         {
             _context = context;
         }
 
-        // GET: Dishes
+        // GET: DishOrders
         public async Task<IActionResult> Index()
         {
-            var cafeDbContext = _context.Dishes.Include(d => d.Category);
-            return View(await cafeDbContext.ToListAsync());
+            var restaurantContext = _context.OrderDishes.Include(d => d.Dish).Include(d => d.Order);
+            return View(await restaurantContext.ToListAsync());
         }
 
-        // GET: Dishes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var dish = await _context.Dishes
-                .Include(d => d.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (dish == null)
-            {
-                return NotFound();
-            }
-
-            return View(dish);
-        }
-
-        // GET: Dishes/Create
+        // GET: DishOrders/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["DishId"] = new SelectList(_context.Dishes, "Id", "Name");
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id");
             return View();
         }
 
-        // POST: Dishes/Create
+        // POST: DishOrders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Weight,Description,PictureUrl,CategoryId")] Dish dish)
+        public async Task<IActionResult> Create([Bind("Id,DishId,OrderId")] OrderDishes dishOrder)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(dish);
+                _context.Add(dishOrder);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", dish.CategoryId);
-            return View(dish);
+            ViewData["DishId"] = new SelectList(_context.Dishes, "Id", "Name", dishOrder.DishId);
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", dishOrder.OrderId);
+            return View(dishOrder);
         }
 
-        // GET: Dishes/Edit/5
+        // GET: DishOrders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,23 +57,24 @@ namespace CafeLab.Controllers
                 return NotFound();
             }
 
-            var dish = await _context.Dishes.FindAsync(id);
-            if (dish == null)
+            var dishOrder = await _context.OrderDishes.FindAsync(id);
+            if (dishOrder == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", dish.CategoryId);
-            return View(dish);
+            ViewData["DishId"] = new SelectList(_context.Dishes, "Id", "Name", dishOrder.DishId);
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", dishOrder.OrderId);
+            return View(dishOrder);
         }
 
-        // POST: Dishes/Edit/5
+        // POST: DishOrders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Weight,Description,PictureUrl,CategoryId")] Dish dish)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DishId,OrderId")] OrderDishes dishOrder)
         {
-            if (id != dish.Id)
+            if (id != dishOrder.Id)
             {
                 return NotFound();
             }
@@ -99,12 +83,12 @@ namespace CafeLab.Controllers
             {
                 try
                 {
-                    _context.Update(dish);
+                    _context.Update(dishOrder);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DishExists(dish.Id))
+                    if (!DishOrderExists(dishOrder.Id))
                     {
                         return NotFound();
                     }
@@ -115,11 +99,12 @@ namespace CafeLab.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", dish.CategoryId);
-            return View(dish);
+            ViewData["DishId"] = new SelectList(_context.Dishes, "Id", "Name", dishOrder.DishId);
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", dishOrder.OrderId);
+            return View(dishOrder);
         }
 
-        // GET: Dishes/Delete/5
+        // GET: DishOrders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,31 +112,32 @@ namespace CafeLab.Controllers
                 return NotFound();
             }
 
-            var dish = await _context.Dishes
-                .Include(d => d.Category)
+            var dishOrder = await _context.OrderDishes
+                .Include(d => d.Dish)
+                .Include(d => d.Order)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (dish == null)
+            if (dishOrder == null)
             {
                 return NotFound();
             }
 
-            return View(dish);
+            return View(dishOrder);
         }
 
-        // POST: Dishes/Delete/5
+        // POST: DishOrders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dish = await _context.Dishes.FindAsync(id);
-            _context.Dishes.Remove(dish);
+            var dishOrder = await _context.OrderDishes.FindAsync(id);
+            _context.OrderDishes.Remove(dishOrder);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DishExists(int id)
+        private bool DishOrderExists(int id)
         {
-            return _context.Dishes.Any(e => e.Id == id);
+            return _context.OrderDishes.Any(e => e.Id == id);
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CafeLab.Models.OrderDishes>
+
+@{
+    ViewData["Title"] = "Страви в замовленнях";
+}
+
+<h1>Страви в замовленнях</h1>
+
+<a type="button" class="btn btn-info" asp-action="Create">Додати страву до замовлення</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Dish)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Dish.Name)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Order.Id)
+                </td>
+                <td>
+                    <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                    <a type="button" class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

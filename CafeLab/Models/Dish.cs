@@ -52,6 +52,6 @@ namespace CafeLab.Models
         public virtual Category Category { get; set; }
 
         [Display(Name = "Замовлення")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<OrderDishes> Orders { get; set; }
     }
 }

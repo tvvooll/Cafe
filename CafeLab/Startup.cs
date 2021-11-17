@@ -22,8 +22,6 @@ namespace CafeLab
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             var connection = Environment.GetEnvironmentVariable("DATABASE_URL");
             var builder = new PostgreSqlConnectionStringBuilder(connection)
             {
@@ -36,6 +34,9 @@ namespace CafeLab
             {
                 options.UseNpgsql(builder.ConnectionString);
             });
+
+            services.AddControllers();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

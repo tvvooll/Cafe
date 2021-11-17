@@ -26,6 +26,6 @@ namespace CafeLab.Models
 
 
         [Display(Name = "Страви")]
-        public virtual ICollection<Dish> Dishes { get; set; }
+        public virtual ICollection<OrderDishes> Dishes { get; set; }
     }
 }

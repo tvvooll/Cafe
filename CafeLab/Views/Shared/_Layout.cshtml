@@ -6,29 +6,57 @@
     <title>@ViewData["Title"] - CafeLab</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .dropdown:hover .dropdown-menu {
+            transition: opacity linear 0.3s;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .dropdown-menu {
+            transition: opacity linear 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            display: block;
+        }
+
+        a.btn:hover {
+            color: #fff !important;
+        }
+
+        a.btn {
+            border: 0;
+        }
+    </style>
 </head>
+
+
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CafeLab</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">CafeLab</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Головна</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Головна</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Категорії</a>
+                            <a class="nav-link" asp-area="" asp-controller="Dishes" asp-action="Index">Меню</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Dishes" asp-action="Index">Страви</a>
+                            <a class="nav-link" asp-area="" asp-controller="Categories" asp-action="Index">Категорії страв</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Замовлення</a>
+                            <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Замовлення</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="OrderDishes" asp-action="Index">Замовлення страв</a>
                         </li>
                     </ul>
                 </div>
@@ -43,7 +71,7 @@
 
     <footer class="border-top footer text-muted text-center">
         <div class="container">
-            &copy; 2021 - CafeLab - Tamara Volcharenko
+            &copy; 2021 - CafeLab - Tamara Volcharenko - TTP-32
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

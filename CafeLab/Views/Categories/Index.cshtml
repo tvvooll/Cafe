@@ -1,41 +1,55 @@
 ﻿@model IEnumerable<CafeLab.Models.Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Меню";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Категорії</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-info" asp-action="Create">Додати  категорію</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Dishes)
             </th>
-            <th></th>
+            <th class="text-center"></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">
+                    <span class="badge bg-secondary">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </span>
+                </td>
+                <td class="text-center">
+                    @foreach (var dish in item.Dishes.Take(3))
+                    {
+                        <span class="badge bg-info">
+                            @dish.Name
+                        </span>
+                    }
+                    @if (item.Dishes.Count() > 3)
+                    {
+                        <span class=" badge bg-primary">
+                            І ще @(item.Dishes.Count() - 3)
+                        </span>
+                    }
+                </td>
+                <td>
+                    <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                    <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Детальніше</a> |
+                    <a type="button" class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

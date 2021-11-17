@@ -18,7 +18,7 @@ namespace CafeLab.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            return View(await _context.Categories.Include(x => x.Dishes).ToListAsync());
         }
 
         // GET: Categories/Details/5
